@@ -11,4 +11,4 @@ java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.c
 ## Usage
 1. Go to the classify panel in the Weka explorer.
 2. Train a classifier.
-3. Right click on your result list, go to plugins, and click on *Save Submission*.
+3. Right click on your result from the result list menu, go to plugins, and click on *Save Submission*.
