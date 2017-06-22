@@ -1,5 +1,5 @@
 # WekaCodaLab
-Provides Weka plugin for saving submissions in CSV format.
+A Weka plugin for saving classification predictions in CSV format.
 
 ## Installation
 Run the following command using WEKA 3.8 or superior:
