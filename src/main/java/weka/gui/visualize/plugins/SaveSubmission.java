@@ -97,7 +97,7 @@ public class SaveSubmission implements ErrorVisualizePlugin {
 
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < preds.numInstances(); i++) {
-      sb.append(((int)preds.instance(i).value(ID_ATTRIBUTE)) + "," + 
+      sb.append(((int)preds.instance(i).value(ID_ATTRIBUTE)) + "\t" + 
                 preds.instance(i).stringValue(preds.classIndex() - 1));
       if (i < preds.numInstances() - 1) {
         sb.append("\n");
