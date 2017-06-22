@@ -1,0 +1,37 @@
+# Package name (required)
+PackageName=WekaCodaLab
+
+# Version (required)
+Version=1.0.0
+
+#Date
+Date=2017-06-26
+
+# Title (required)
+Title=WekaCodaLab
+
+Category=Plugins
+
+# Author (required)
+Author=Weka Team 
+
+# Maintainer (required)
+Maintainer=felipebravom <fjb11@students.waikato.ac.nz>
+
+# License (required)
+License=GPL 3.0
+
+# Description (required)
+Description=Provides functionality for saving predictions in CSV format.
+
+# Package URL for obtaining the package archive (required)
+PackageURL=https://github.com/felipebravom/WekaCodaLab/releases/download/v1.0.0/WekaCodaLab1.0.0.zip
+
+# URL for further information
+URL=https://github.com/felipebravom/WekaCodaLab
+
+# Related to other packages?
+#Related=
+
+# Dependencies
+Depends=weka (>=3.7.1)
