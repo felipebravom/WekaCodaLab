@@ -23,112 +23,112 @@ import java.io.IOException;
 
 public class SaveSubmission implements ErrorVisualizePlugin {
 
-  private static int ID_ATTRIBUTE = 0;
+	private static int ID_ATTRIBUTE = 0;
 
-  public String getDesignVersion() {
-    return "3.7.5";
-  }
+	public String getDesignVersion() {
+		return "3.7.5";
+	}
 
-  public String getMinVersion() {
-    return "3.7.5";
-  }
+	public String getMinVersion() {
+		return "3.7.5";
+	}
 
-  public String getMaxVersion() {
-    return "10.0.0";
-  }
+	public String getMaxVersion() {
+		return "10.0.0";
+	}
 
-  public JMenuItem getVisualizeMenuItem(Instances preds) {
-    final Instances finalPreds = preds;
-    
-    // only for nominal classes
-    if (!preds.classAttribute().isNominal())
-      return null;
+	public JMenuItem getVisualizeMenuItem(Instances preds) {
+		final Instances finalPreds = preds;
 
-    JMenuItem result = new JMenuItem("Save submission");
-    result.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-	display(finalPreds);
-      }
-    });
-    
-    return result;
-  }
+		// only for nominal classes
+		if (!preds.classAttribute().isNominal())
+			return null;
 
-  private String m_result = "";
+		JMenuItem result = new JMenuItem("Save submission");
+		result.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				display(finalPreds);
+			}
+		});
 
-  private JTextField filename = new JTextField(), dir = new JTextField();
-  private JButton save = new JButton("Save");
-  private JFrame cp = new JFrame("Save submission");
+		return result;
+	}
 
-  private class SaveOutput implements ActionListener {
+	private String m_result = "";
 
-    public void actionPerformed(ActionEvent e) {
+	private JTextField filename = new JTextField(), dir = new JTextField();
+	private JButton save = new JButton("Save");
+	private JFrame cp = new JFrame("Save submission");
 
-      JFileChooser c = new JFileChooser();
-      int rVal = c.showSaveDialog(cp);
-      if (rVal == JFileChooser.APPROVE_OPTION) {
-        filename.setText(c.getSelectedFile().getName() + " --- saved!");
-        dir.setText(c.getCurrentDirectory().toString());
-        try {
-          PrintWriter fw = new PrintWriter(c.getSelectedFile());
-          fw.println(m_result);
-          fw.flush();
-          fw.close();
-        } catch (IOException ex) {
-          filename.setText("File could not be opened!");
-          dir.setText("");
-        }
-      }
-      if (rVal == JFileChooser.CANCEL_OPTION) {
-        filename.setText("You pressed cancel");
-        dir.setText("");
-      }
-    }
-  }
+	private class SaveOutput implements ActionListener {
 
-  protected void display(Instances preds) {
+		public void actionPerformed(ActionEvent e) {
 
-    if (preds == null) {
-      JOptionPane.showMessageDialog(null, "No data available for display!");
-      return;
-    }
+			JFileChooser c = new JFileChooser();
+			int rVal = c.showSaveDialog(cp);
+			if (rVal == JFileChooser.APPROVE_OPTION) {
+				filename.setText(c.getSelectedFile().getName() + " --- saved!");
+				dir.setText(c.getCurrentDirectory().toString());
+				try {
+					PrintWriter fw = new PrintWriter(c.getSelectedFile());
+					fw.println(m_result);
+					fw.flush();
+					fw.close();
+				} catch (IOException ex) {
+					filename.setText("File could not be opened!");
+					dir.setText("");
+				}
+			}
+			if (rVal == JFileChooser.CANCEL_OPTION) {
+				filename.setText("You pressed cancel");
+				dir.setText("");
+			}
+		}
+	}
 
-    m_result = "";
+	protected void display(Instances preds) {
 
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < preds.numInstances(); i++) {
-      sb.append(((int)preds.instance(i).value(ID_ATTRIBUTE)) + "\t" + 
-                preds.instance(i).stringValue(preds.classIndex() - 1));
-      if (i < preds.numInstances() - 1) {
-        sb.append("\n");
-      }
-    }
-    m_result = sb.toString();
+		if (preds == null) {
+			JOptionPane.showMessageDialog(null, "No data available for display!");
+			return;
+		}
 
-    filename = new JTextField();
-    dir = new JTextField();
-    save = new JButton("Save");
+		m_result = "";
 
-    cp = new JFrame("Save submission");
- 
-    JPanel p = new JPanel();
-    save.addActionListener(new SaveOutput());
-    p.add(save);
-    cp.add(p, BorderLayout.SOUTH);
-    dir.setEditable(false);
-    filename.setEditable(false);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < preds.numInstances(); i++) {
+			sb.append(((int)preds.instance(i).value(ID_ATTRIBUTE)) + "\t" + 
+					preds.instance(i).stringValue(preds.classIndex() - 1));
+			if (i < preds.numInstances() - 1) {
+				sb.append("\n");
+			}
+		}
+		m_result = sb.toString();
 
-    p = new JPanel();
-    p.setLayout(new GridLayout(2, 1));
-    p.add(filename);
-    p.add(dir);
-    cp.add(p, BorderLayout.NORTH);
+		filename = new JTextField();
+		dir = new JTextField();
+		save = new JButton("Save");
 
-    JTextArea jta = new JTextArea(m_result);
-    jta.setEditable(false);
-    cp.add(new JScrollPane(jta), BorderLayout.CENTER); 
+		cp = new JFrame("Save submission");
 
-    cp.setSize(600, 600);
-    cp.setVisible(true);
-  }
+		JPanel p = new JPanel();
+		save.addActionListener(new SaveOutput());
+		p.add(save);
+		cp.add(p, BorderLayout.SOUTH);
+		dir.setEditable(false);
+		filename.setEditable(false);
+
+		p = new JPanel();
+		p.setLayout(new GridLayout(2, 1));
+		p.add(filename);
+		p.add(dir);
+		cp.add(p, BorderLayout.NORTH);
+
+		JTextArea jta = new JTextArea(m_result);
+		jta.setEditable(false);
+		cp.add(new JScrollPane(jta), BorderLayout.CENTER); 
+
+		cp.setSize(600, 600);
+		cp.setVisible(true);
+	}
 }
