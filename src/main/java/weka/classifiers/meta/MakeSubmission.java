@@ -49,11 +49,9 @@ public class MakeSubmission extends SingleClassifierEnhancer {
 
 	public double[][] distributionsForInstances(Instances data) throws Exception {
 
-		System.out.println("num instances:"+data.numInstances());
-
 		PrintWriter pw = new PrintWriter(new FileOutputStream(
 				this.m_outFile, 
-			    false /* append = true */));
+			    true /* append = true */));
 		
 		
 		double[][] distributions =  ((BatchPredictor)m_Classifier).distributionsForInstances(data);
