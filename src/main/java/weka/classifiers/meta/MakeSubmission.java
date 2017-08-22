@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-
 import weka.classifiers.SingleClassifierEnhancer;
 import weka.core.BatchPredictor;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionMetadata;
+
 
 public class MakeSubmission extends SingleClassifierEnhancer {
 
@@ -19,7 +19,7 @@ public class MakeSubmission extends SingleClassifierEnhancer {
 	/** The attribute id index **/
 	protected int m_id = 1;
 
-	
+
 	/** The output file to save predictions  */
 	protected File m_outFile = new File("-- set me --");
 
@@ -38,7 +38,7 @@ public class MakeSubmission extends SingleClassifierEnhancer {
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
 		m_Classifier.buildClassifier(data);
-		
+
 
 	}
 
@@ -47,40 +47,39 @@ public class MakeSubmission extends SingleClassifierEnhancer {
 		return true; // So that WEKA will use distributionsForInstances() rather than distributionForInstance()
 	}
 
+
 	public double[][] distributionsForInstances(Instances data) throws Exception {
 
 		PrintWriter pw = new PrintWriter(new FileOutputStream(
 				this.m_outFile, 
-			    true /* append = true */));
-		
-		
+				true /* append = true */));
+
+
 		double[][] distributions =  ((BatchPredictor)m_Classifier).distributionsForInstances(data);
-				
+
 
 		int i=0;
 		for(Instance inst:data){
-			try {
-				distributions[i]=this.m_Classifier.distributionForInstance(inst);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
 			pw.print((int)inst.value(this.m_id-1)+ "\t");
+
 			for(int j=0;j<distributions[i].length;j++){
 				pw.print(distributions[i][j]);
 				if(j<distributions[i].length-1)
 					pw.print("\t");
 				else
-					pw.println();
-				
+					pw.println();				
 			}
-					
-			
+
+
+
+
 			i++;
 
 		}
-		
+
+
+
 		pw.close();
 
 
